@@ -1,0 +1,49 @@
+######################################################
+#################### Volcanoplot by EnhancedVolcano
+######################################################
+
+library(EnhancedVolcano)
+
+# Import DESeq2 processed dataset
+DEG_shNm1 <- read.csv("res_shNm1.csv")
+DEG_shNm2 <- read.csv("res_shNm2.csv")
+
+# Data arrange 
+DEG_shNm1$diffexpressed <- "NO"
+DEG_shNm1$diffexpressed[DEG_shNm1$padj < 0.05 & DEG_shNm1$log2FoldChange > 1 & DEG_shNm1$gse_biotype == "protein_coding"] <- "UP"
+DEG_shNm1$diffexpressed[DEG_shNm1$padj < 0.05 & DEG_shNm1$log2FoldChange < -1 & DEG_shNm1$gse_biotype == "protein_coding"] <- "DW"
+DEG_shNm1$delabel <- NA
+DEG_shNm1$delabel[DEG_shNm1$diffexpressed != "NO"] <- DEG_shNm1$gse_name[DEG_shNm1$diffexpressed != "NO"]
+
+DEG_shNm2$diffexpressed <- "NO"
+DEG_shNm2$diffexpressed[DEG_shNm2$padj < 0.05 & DEG_shNm2$log2FoldChange > 1 & DEG_shNm2$gse_biotype == "protein_coding"] <- "UP"
+DEG_shNm2$diffexpressed[DEG_shNm2$padj < 0.05 & DEG_shNm2$log2FoldChange < -1 & DEG_shNm2$gse_biotype == "protein_coding"] <- "DW"
+DEG_shNm2$delabel <- NA
+DEG_shNm2$delabel[DEG_shNm2$diffexpressed != "NO"] <- DEG_shNm2$gse_name[DEG_shNm2$diffexpressed != "NO"]
+
+DEG_shNm1_P <- subset(DEG_shNm1, DEG_shNm1$gse_biotype == "protein_coding")
+DEG_shNm2_P <- subset(DEG_shNm2, DEG_shNm2$gse_biotype == "protein_coding")
+
+# Plot by EnhancedVolcano (label=Gene name, log2FC, padj, Cutoff=0.05)
+EnhancedVolcano(DEG_shNm1_P, lab = DEG_shNm1_P$delabel, x = 'log2FoldChange', y = 'padj', pCutoff = 0.05)
+EnhancedVolcano(DEG_shNm2_P, lab = DEG_shNm2_P$delabel, x = 'log2FoldChange', y = 'padj', pCutoff = 0.05)
+
+
+# Plot by ggplot2
+v_plot <- ggplot(data = DEG_shNm1_P, aes(x=log2FoldChange, y=-log10(padj), col=diffexpressed, label=delabel)) +
+  geom_point() +
+  theme_minimal() +
+  geom_text_repel() +
+  scale_color_manual(values = c("blue", "black", "red")) +
+  geom_vline(xintercept=c(-1, 1), col="black", linetype="dotted") +
+  geom_hline(yintercept=-log10(0.05), col="black", linetype="dotted")          
+v_plot
+
+v_plot_2 <- ggplot(data = DEG_shNm2_P, aes(x=log2FoldChange, y=-log10(padj), col=diffexpressed, label=delabel)) +
+  geom_point() +
+  theme_minimal() +
+  geom_text_repel() +
+  scale_color_manual(values = c("blue", "black", "red")) +
+  geom_vline(xintercept=c(-1, 1), col="black", linetype="dotted") +
+  geom_hline(yintercept=-log10(0.05), col="black", linetype="dotted")
+v_plot_2
