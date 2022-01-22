@@ -7,9 +7,17 @@
 # Target cell# in each sample is 5000.
 # Library prep by "Chromium Next GEM Single Cell 3ʹ Reagent Kits v3.1 (Dual Index)"
 
+##########################################################################################################
 
 ## Make "kallisto_getting_started" file for data strage
 hk@HK-MacBook-Pro Desktop % mkdir kallisto_getting_started
+
+## Make "fastqc_results" file for fastqc results
+hk@HK-MacBook-Pro Desktop % cd kallisto_getting_started
+hk@HK-MacBook-Pro Desktop % mkdir fastqc_results
+
+## Quality check by fastqc
+
 
 
 hk@HK-MacBook-Pro Desktop % cd kallisto_getting_started
