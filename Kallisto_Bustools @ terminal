@@ -1,8 +1,11 @@
-####################################################################################################
-### Quality control, Transcriptome mapping and Quantification of sequenced dataset for scRNA-seq
-####################################################################################################
+##########################################################################################################
+### Quality control, Transcriptome mapping and Quantification of sequenced dataset for scRNA-seq [220122-]
+##########################################################################################################
 
-###
+## Sample info
+# Mouse retina
+# Target cell# in each sample is 5000.
+# Library prep by "Chromium Next GEM Single Cell 3ʹ Reagent Kits v3.1 (Dual Index)"
 
 
 ## Make "kallisto_getting_started" file for data strage
