@@ -1,0 +1,40 @@
+####################################################################################################
+### Quality control, Transcriptome mapping and Quantification of sequenced dataset for scRNA-seq
+####################################################################################################
+
+###
+
+
+## Make "kallisto_getting_started" file for data strage
+hk@HK-MacBook-Pro Desktop % mkdir kallisto_getting_started
+
+
+hk@HK-MacBook-Pro Desktop % cd kallisto_getting_started
+hk@HK-MacBook-Pro kallisto_getting_started % pwd
+/Users/hk/Desktop/kallisto_getting_started
+
+## マウスTranscriptome ensembleデータのDL（GRCm39）
+hk@HK-MacBook-Pro kallisto_getting_started % wget http://ftp.ensembl.org/pub/release-104/fasta/mus_musculus/cdna/Mus_musculus.GRCm39.cdna.all.fa.gz
+## マウスTranscriptome ensembleデータのDL（GRCm38）
+hk@HK-MacBook-Pro kallisto_getting_started % wget http://ftp.ensembl.org/pub/release-104/fasta/mus_musculus/cdna/Mus_musculus.GRCm38.cdna.all.fa.gz
+
+## 10x genomics v2 white listデータ（barcode?）のDL from BUStools Github
+hk@HK-MacBook-Pro kallisto_getting_started % wget https://github.com/BUStools/getting_started/releases/download/getting_started/10xv2_whitelist.txt
+
+## transcripts 2 genesのDL（GRCm38用だと思う）from BUStools Github
+hk@HK-MacBook-Pro kallisto_getting_started % wget https://github.com/BUStools/getting_started/releases/download/getting_started/transcripts_to_genes.txt
+
+## SRRデータの取得（SRR9867760.1）
+## マニュアルでDLしたが、”wget”でも可能なはず。
+
+## SRA TOOLKITのDL
+
+## SRA TOOLKIにより、SRAファイルを分割する
+hk@HK-MacBook-Pro Downloads % fastq-dump --split-files SRR9867760.1 --gzip
+
+
+
+
+# 
+hk@HK-MacBook-Pro bus_output % bustools correct -w  ../10xv2_whitelist.txt -p output.bus | bustools sort -T tmp/ -t 4 -p - | bustools count -o genecount/genes -g ../transcripts_to_genes.txt -e matrix.ec -t transcripts.txt --genecounts -
+
