@@ -26,6 +26,17 @@ mkdir fastqc_trimmed_result
 ## Score 20=default. 30= 
 trim_galore --paired --q 30 -o fastqc_trimmed_result 1_Control_S1_L001_R1_001.fastq.gz 1_Control_S1_L001_R2_001.fastq.gz
 
+## Data_storage
+# File_structure
+#    -- Trimmed_Read
+#    -- Index_file
+#    -- t2g_file
+#    -- 10x_white_list
+#    -- output_file_for_aligned_dada
+
+## pseudoalignment by kallisto bustools
+## kallisto bus -i <cdna.idx> -o <file_name> -x <single_cell_technology> -t <# of threads to use(defalt=1)> <Trimmed_Read_R1(fastq.gz)> <Trimmed_Read_R2(fastq.gz)>
+kallisto bus -i Mus_musculus.GRCm38.cdna.all.idx -o Control_kb/ -x 10xv3 -t 4 1_Control_S1_L001_R1_001_val_1.fq.gz 1_Control_S1_L001_R2_001_val_2.fq.gz
 
 
 
