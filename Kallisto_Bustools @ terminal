@@ -43,3 +43,5 @@ kallisto bus -i Mus_musculus.GRCm38.cdna.all.idx -o Control_kb/ -x 10xv3 -t 4 1_
 ## Count
 ## bustools correct -w <whitelist.txt> -p <BUS_files> | bustools sort -T <tmp_folder> -t <# of threads> -p - | bustools count -o <output_folder> -g <t2g.txt> -e <matrix.ec> -t <transcripts.txt> --genecounts -
 bustools correct -w ../10xv3_whitelist.txt -p output.bus | bustools sort -T tmp -t 4 -p - | bustools count -o genecount/gene -g ../t2g.txt -e matrix.ec -t transcripts.txt --genecounts -
+
+##########################################################################################################
