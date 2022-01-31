@@ -38,52 +38,8 @@ trim_galore --paired --q 30 -o fastqc_trimmed_result 1_Control_S1_L001_R1_001.fa
 ## kallisto bus -i <cdna.idx> -o <file_name> -x <single_cell_technology> -t <# of threads to use(defalt=1)> <Trimmed_Read_R1(fastq.gz)> <Trimmed_Read_R2(fastq.gz)>
 kallisto bus -i Mus_musculus.GRCm38.cdna.all.idx -o Control_kb/ -x 10xv3 -t 4 1_Control_S1_L001_R1_001_val_1.fq.gz 1_Control_S1_L001_R2_001_val_2.fq.gz
 
-##
-##
-bustools correct -w ../10xv3_whitelist.txt -p bus_output | bustools sort -T tmp -t 4 -p - | bustools count -o genecount/gene -g ../t2g.txt -e matrix.ec -t transcripts.txt --genecounts -
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-hk@HK-MacBook-Pro Desktop % cd kallisto_getting_started
-hk@HK-MacBook-Pro kallisto_getting_started % pwd
-/Users/hk/Desktop/kallisto_getting_started
-
-## マウスTranscriptome ensembleデータのDL（GRCm39）
-hk@HK-MacBook-Pro kallisto_getting_started % wget http://ftp.ensembl.org/pub/release-104/fasta/mus_musculus/cdna/Mus_musculus.GRCm39.cdna.all.fa.gz
-## マウスTranscriptome ensembleデータのDL（GRCm38）
-hk@HK-MacBook-Pro kallisto_getting_started % wget http://ftp.ensembl.org/pub/release-104/fasta/mus_musculus/cdna/Mus_musculus.GRCm38.cdna.all.fa.gz
-
-## 10x genomics v2 white listデータ（barcode?）のDL from BUStools Github
-hk@HK-MacBook-Pro kallisto_getting_started % wget https://github.com/BUStools/getting_started/releases/download/getting_started/10xv2_whitelist.txt
-
-## transcripts 2 genesのDL（GRCm38用だと思う）from BUStools Github
-hk@HK-MacBook-Pro kallisto_getting_started % wget https://github.com/BUStools/getting_started/releases/download/getting_started/transcripts_to_genes.txt
-
-## SRRデータの取得（SRR9867760.1）
-## マニュアルでDLしたが、”wget”でも可能なはず。
-
-## SRA TOOLKITのDL
-
-## SRA TOOLKIにより、SRAファイルを分割する
-hk@HK-MacBook-Pro Downloads % fastq-dump --split-files SRR9867760.1 --gzip
-
-
-
-
-# 
-hk@HK-MacBook-Pro bus_output % bustools correct -w  ../10xv2_whitelist.txt -p output.bus | bustools sort -T tmp/ -t 4 -p - | bustools count -o genecount/genes -g ../transcripts_to_genes.txt -e matrix.ec -t transcripts.txt --genecounts -
-
+## Correct all barcodes that are at Hamming distance 1 away from a single barcode in the whitelist
+## Sort 
+## Count
+## bustools correct -w <whitelist.txt> -p <BUS_files> | bustools sort -T <tmp_folder> -t <# of threads> -p - | bustools count -o <output_folder> -g <t2g.txt> -e <matrix.ec> -t <transcripts.txt> --genecounts -
+bustools correct -w ../10xv3_whitelist.txt -p output.bus | bustools sort -T tmp -t 4 -p - | bustools count -o genecount/gene -g ../t2g.txt -e matrix.ec -t transcripts.txt --genecounts -
