@@ -2,7 +2,7 @@
 
 **CONTENTS**
 
-**[Kallisto_Bustools](https://github.com/HKRBYS/Random-Note/blob/main/Kallisto_Bustools%20%40%20terminal)**
+**[Pseudoalignment by Kallisto_Bustools](https://github.com/HKRBYS/Random-Note/blob/main/Kallisto_Bustools%20%40%20terminal)**
 
   1. Run Quality Check by "Fastqc"
   2. Perform Adapter Application and Quality Trimming by "Trim galore!"
