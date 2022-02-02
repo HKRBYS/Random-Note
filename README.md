@@ -1,15 +1,14 @@
 # Random-Note
 Random Note
 
-<>Contents<>
+**CONTENTS**
 
-Kallisto_Bustools @ terminal
+**[Kallisto_Bustools](https://github.com/HKRBYS/Random-Note/blob/main/Kallisto_Bustools%20%40%20terminal)**
 
-Run QC by Fastqc
-Perform Trimming by Trimgalore!
-Re-run QC
-Align reads to a reference (Pseudoalingment by Kallisto_Bustools)
-
+  1. Run Quality Check by "Fastqc"
+  2. Perform　Adapter Application and Quality Trimming by "Trim galore!"
+  3. Psedoalign Reads To A Reference Transcriptome by "Kallisto"
+  4. Associate Reads with Their Cell Origin and Collapse Reads According to UMI by "Bustools"
 
 
 
