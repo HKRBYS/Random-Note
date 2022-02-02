@@ -1,5 +1,4 @@
 # Random-Note
-Random Note
 
 **CONTENTS**
 
