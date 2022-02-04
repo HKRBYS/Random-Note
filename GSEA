@@ -1,0 +1,58 @@
+##############################################################
+################# Gene Set Enrichment Analysis
+##############################################################
+
+### use "fgsea"
+## Load packages
+
+library(fgsea)
+library(data.table)
+library(org.Mm.eg.db)
+library(biomaRt)
+library(fgsea)
+
+
+## gene IDs Conversion (mouse -> human) 
+
+mart <- useDataset("mmusculus_gene_ensembl", mart=useMart("ensembl"))
+bm <- getBM(attributes=c("ensembl_gene_id", "hsapiens_homolog_associated_gene_name"), mart=mart) %>%
+  distinct() %>%
+  as_tibble() %>%
+  na_if("") %>% 
+  na.omit()
+bm
+
+
+## 
+DEG_Nm1_2 <- inner_join(DEG_Nm1, bm, by=c("row"="ensembl_gene_id"))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# use "enrichplot"
+
+
+library(fgsea)
+library(data.table)
+library(org.Mm.eg.db)
+library(biomaRt)
+library(enrichplot)
+
+
+
+
+
+
