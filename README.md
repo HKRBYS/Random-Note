@@ -18,7 +18,7 @@
   4. 
 
 
-**[Gene Set Enrichment Analysis (GSEA) using DESeq2 output by fgsea](https://github.com/HKRBYS/Random-Note/blob/main/)**
+**[Gene Set Enrichment Analysis (GSEA) using DESeq2 output by fgsea](https://github.com/HKRBYS/Random-Note/blob/main/GSEA)**
 
   1. 
   2. 
