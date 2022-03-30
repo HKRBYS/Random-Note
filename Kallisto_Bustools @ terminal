@@ -21,6 +21,10 @@ fastqc -o fastqc_result 3_Rd1_S3_L002_R1_001.fastq.gz 3_Rd1_S3_L002_R2_001.fastq
 cd kallisto_getting_started
 mkdir fastqc_trimmed_result
 
+## 1. Run Quality Check by "Fastqc"
+
+
+## 2. Perform Adapter Application and Quality Trimming by "Trim galore!"
 ## Trimming by Trim_galore
 ## trim_galore --paired --q <Score> -o <file_name> <Read_R1(fastq.gz)> <Read_R2(fastq.gz)>
 ## Score 20=default. 30= 
@@ -34,10 +38,12 @@ trim_galore --paired --q 30 -o fastqc_trimmed_result 1_Control_S1_L001_R1_001.fa
 #    -- 10x_white_list
 #    -- output_file_for_aligned_dada
 
+## 3. Psedoalign Reads To A Reference Transcriptome by "Kallisto"
 ## pseudoalignment by kallisto bustools
 ## kallisto bus -i <cdna.idx> -o <file_name> -x <single_cell_technology> -t <# of threads to use(defalt=1)> <Trimmed_Read_R1(fastq.gz)> <Trimmed_Read_R2(fastq.gz)>
 kallisto bus -i Mus_musculus.GRCm38.cdna.all.idx -o Control_kb/ -x 10xv3 -t 4 1_Control_S1_L001_R1_001_val_1.fq.gz 1_Control_S1_L001_R2_001_val_2.fq.gz
 
+## 4. Associate Reads with Their Cell Origin and Collapse Reads According to UMI by "Bustools"
 ## Correct all barcodes that are at Hamming distance 1 away from a single barcode in the whitelist
 ## Sort 
 ## Count
