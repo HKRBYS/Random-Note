@@ -1,3 +1,13 @@
+##########################################################################################################
+### Quality control, Transcriptome mapping and Quantification of sequenced dataset for bulkRNA-seq [220330-]
+##########################################################################################################
+
+## Sample info
+# human choroid
+# Target cell# in each sample is XXXX.
+# Library prep by "XXXXXXXX"
+
+##########################################################################################################
 
 
 
@@ -5,10 +15,13 @@
 # fastq-dump <SRA_file> --split-files --gzip  
 fastq-dump SRR11587762.1 --split-files --gzip
 
+# fastq trimming
+trim_galore --paired --q 30 -o fastqc_trimmed SRR11587762.1_1.fastq.gz SRR11587762.1_2.fastq.gz
 
 
 
-
+# Kallisto index file generation
+kallisto index --index=kallisto_idx/GRCh38.p13.idx Homo_sapiens.GRCh38.cdna.all.fa
 
 
 
