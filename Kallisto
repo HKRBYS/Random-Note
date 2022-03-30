@@ -1,0 +1,19 @@
+
+
+
+# Split SRA files into fastq files ("--split-files" for paired end / "--gzip" for generation of gzip files)
+# fastq-dump <SRA_file> --split-files --gzip  
+fastq-dump SRR11587762.1 --split-files --gzip
+
+
+
+
+
+
+
+
+
+
+
+
+
