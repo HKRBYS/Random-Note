@@ -3,25 +3,29 @@
 ##########################################################################################################
 
 ## Sample info
-# human choroid
-# Target cell# in each sample is XXXX.
+# Mouse explant retina
+# Control (shScramble) x3 and shNmnat1 x3
 # Library prep by "XXXXXXXX"
+# Adapter is "Nextera"
 
 ##########################################################################################################
 
-
-
+# If you start with SRA files
 # Split SRA files into fastq files ("--split-files" for paired end / "--gzip" for generation of gzip files)
-# fastq-dump <SRA_file> --split-files --gzip  
+*# fastq-dump <SRA_file> --split-files --gzip*
 fastq-dump SRR11587762.1 --split-files --gzip
 
-# fastq trimming
+# Trim low quality seq and adapters
+*# trim_galore --paired --q 30 -o <output_dir> fastqc_trimmed <Seq1.fastq.gz> <Seq2.fastq.gz>*
 trim_galore --paired --q 30 -o fastqc_trimmed SRR11587762.1_1.fastq.gz SRR11587762.1_2.fastq.gz
 
+  # If you need to create kallisto inx file
+  # Kallisto index file generation
+  *# kallisto index -i kallisto_idx/GRCm38.p13.idx Mus_musculus.GRCm38.cdna.all.idx*
+  kallisto index -i GRCh38.p13.idx Mus_musculus.GRCm38.cdna.all.fa
 
+# Quantification of gene expression
 
-# Kallisto index file generation
-kallisto index --index=kallisto_idx/GRCh38.p13.idx Homo_sapiens.GRCh38.cdna.all.fa
 
 
 
