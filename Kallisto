@@ -8,24 +8,28 @@
 # Library prep by "XXXXXXXX"
 # Adapter is "Nextera"
 
-##########################################################################################################
+# Terminal ################################################################################################
 
-# If you start with SRA files
-# Split SRA files into fastq files ("--split-files" for paired end / "--gzip" for generation of gzip files)
-*# fastq-dump <SRA_file> --split-files --gzip*
+
+## If you start with SRA files
+## Split SRA files into fastq files ("--split-files" for paired end / "--gzip" for generation of gzip files)
+# fastq-dump <SRA_file> --split-files --gzip
 fastq-dump SRR11587762.1 --split-files --gzip
 
-# Trim low quality seq and adapters
-*# trim_galore --paired --q 30 -o <output_dir> fastqc_trimmed <Seq1.fastq.gz> <Seq2.fastq.gz>*
+## Trim low quality seq and adapters
+# trim_galore --paired --q 30 -o <output_dir> fastqc_trimmed <Seq1.fastq.gz> <Seq2.fastq.gz>
 trim_galore --paired --q 30 -o fastqc_trimmed SRR11587762.1_1.fastq.gz SRR11587762.1_2.fastq.gz
 
-  # If you need to create kallisto inx file
-  # Kallisto index file generation
-  *# kallisto index -i kallisto_idx/GRCm38.p13.idx Mus_musculus.GRCm38.cdna.all.idx*
+  ## If you need to create kallisto inx file
+  ## Kallisto index file generation
+  # kallisto index -i kallisto_idx/GRCm38.p13.idx Mus_musculus.GRCm38.cdna.all.idx
   kallisto index -i GRCh38.p13.idx Mus_musculus.GRCm38.cdna.all.fa
 
-# Quantification of gene expression
+## Quantification of gene expression
+# kallisto quant -i <kallisto_idx> -o <output_dir> -b 100 <Seq1.fq.gz> <Seq2.fq.gz>
+kallisto quant -i ../Mus_musculus.GRCm38.cdna.all.idx -o Kallisto_quant_result -b 100 shN1_2_R1.fastq-016.gz_val_1.fq.gz shN1_2_R2.fastq-018.gz_val_2.fq.gz
 
+# R #########################################################################################################
 
 
 
