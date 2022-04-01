@@ -10,7 +10,6 @@
 
 # Terminal ################################################################################################
 
-
 ## If you start with SRA files
 ## Split SRA files into fastq files ("--split-files" for paired end / "--gzip" for generation of gzip files)
 # fastq-dump <SRA_file> --split-files --gzip
@@ -31,7 +30,28 @@ kallisto quant -i ../Mus_musculus.GRCm38.cdna.all.idx -o Kallisto_quant_result -
 
 # R #########################################################################################################
 
+# Package load
+library("tximport", lib.loc="~/Library/r-miniconda/lib/R/library")
 
+# Import "t2g.txt"
+setwd("~/Desktop/bulk_RNAseq")
+t2g <- read.table("t2g.txt")
+
+# File names
+kallisto_files <- file.path(list.files("~/Desktop/bulk_RNAseq/trimmed/Kallisto_quant_result", pattern = "abundance"))
+names(kallisto_files) <- c("Ctrl_1", "Ctrl_2", "Ctrl_3", "shNm1_1", "shNm1_2", "shNm1_3")
+
+kallisto_files
+
+# Expression level of trancscripts
+tx.exp <- tximport(kallisto_files, type="kallisto", txOut=TRUE)
+head(tx.exp)
+
+# Expression level of Genes
+gene.exp <- summarizeToGene(tx.exp, t2g, countsFromAbundance = "scaledTPM")
+head(gene.exp)
+
+write.csv(gene.exp, "kallisto_exp.csv")
 
 
 
