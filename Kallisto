@@ -15,6 +15,9 @@
 # fastq-dump <SRA_file> --split-files --gzip
 fastq-dump SRR11587762.1 --split-files --gzip
 
+## Check quality score
+fastqc -o fastqc_results SRR9867761_2.fastq SRR9867761_3.fastq
+
 ## Trim low quality seq and adapters
 # trim_galore --paired --q 30 -o <output_dir> fastqc_trimmed <Seq1.fastq.gz> <Seq2.fastq.gz>
 trim_galore --paired --q 30 -o fastqc_trimmed SRR11587762.1_1.fastq.gz SRR11587762.1_2.fastq.gz
