@@ -33,6 +33,7 @@ kallisto quant -i ../Mus_musculus.GRCm38.cdna.all.idx -o Kallisto_quant_result -
 
 # R #########################################################################################################
 
+### Visualization of TPM
 # Package load
 library("tximport", lib.loc="~/Library/r-miniconda/lib/R/library")
 
@@ -57,6 +58,46 @@ head(gene.exp)
 write.csv(gene.exp, "kallisto_exp.csv")
 
 
+### Sleuth
+## Parsing metadata
+
+  # Define working directory
+  setwd("~/Desktop/bulk_RNAseq/trimmed/Kallisto_quant_result")
+  base_dir <- "~/Desktop/bulk_RNAseq/trimmed/Kallisto_quant_result"
+
+  # Generate metadata
+  sample <- dir(file.path(base_dir))
+  sample
+  condition <- c("Ctrl", "Ctrl", "Ctrl", "shNmnat1", "shNmnat1", "shNmnat1")
+  path <- sample
+  path
+  metadata <- data.frame(sample, condition, path)
+  print(metadata)
+
+  # Generate t2g file
+  setwd("~/Desktop/bulk_RNAseq")
+  t2g <- read.table("transcripts_to_genes.txt", header = F, stringsAsFactors = F)
+  t2g <- dplyr::rename(t2g, target_id = V1, ens_gene = V2, ext_gene = V3)
+  head(t2g)
+  
+## Preparing the analysis  
+  setwd("~/Desktop/bulk_RNAseq/trimmed/Kallisto_quant_result")
+  so <- sleuth_prep(metadata, target_mapping = t2g,
+                    aggregation_column = 'ens_gene', extra_bootstrap_summary = TRUE)
+  
+## Analysis  
+  so <- sleuth_fit(so, ~condition, "full")
+  so <- sleuth_fit(so, ~1, "reduced")
+  so <- sleuth_lrt(so, 'reduced', 'full')
+  models(so)
+  
+## Obtaining gene-level differential expression results
+  sleuth_table_gene <- sleuth_results(so, 'reduced:full', 'lrt', show_all = FALSE)
+  sleuth_table_gene_2 <- dplyr::filter(sleuth_table_gene, qval <= 0.05)
+  head(sleuth_table_gene_2, 20)
+  
+  # Output  
+  write.csv(sleuth_table_gene, file = "sleuth_t_g.csv")
 
 
 
